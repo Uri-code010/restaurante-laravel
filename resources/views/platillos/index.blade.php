@@ -16,6 +16,31 @@
     </div>
 @endif
 
+@if(session('error'))
+    <div style="color: red; font-weight: bold;">
+        {{ session('error') }}
+    </div>
+@endif
+
+<form method="GET" action="{{ route('platillos.index') }}">
+
+    <input type="text" name="buscar" placeholder="Buscar platillo..." value="{{ $buscar }}">
+
+    <select name="categoria">
+        <option value="">Todas las categorías</option>
+
+        @foreach($categorias as $cat)
+            <option value="{{ $cat }}" {{ $categoria == $cat ? 'selected' : '' }}>
+                {{ $cat }}
+            </option>
+        @endforeach
+    </select>
+
+    <button type="submit">Filtrar</button>
+
+</form>
+<br>
+
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
@@ -49,6 +74,10 @@
         @endforeach
     </tbody>
 </table>
+
+<br>
+
+{{ $platillos->links() }}
 
 </body>
 </html>

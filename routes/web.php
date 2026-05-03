@@ -9,3 +9,4 @@ Route::post('/platillos', [PlatilloController::class, 'store']);
 Route::delete('/platillos/{id}', [PlatilloController::class, 'destroy']);
 Route::get('/platillos/{id}/editar', [PlatilloController::class, 'edit']);
 Route::put('/platillos/{id}', [PlatilloController::class, 'update']);
+Route::resource('platillos', PlatilloController::class);
