@@ -1,83 +1,66 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Platillos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
+@extends('layouts.app')
 
-<h1 class="text-center mb-4">🍽️ Gestión de Platillos</h1>
+@section('content')
+<div class="container">
+    <h2>🍽️ Nuestro Menú</h2>
 
-<a href="/platillos/crear" class="btn btn-success mb-3">+ Agregar Platillo</a>
+    <!-- Buscador -->
+    <form action="{{ route('menu') }}" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="buscar" value="{{ $buscar }}" class="form-control" placeholder="Buscar platillo...">
+            </div>
+            <div class="col-md-3">
+                <select name="categoria" class="form-control">
+                    <option value="">Todas las categorías</option>
+                    @foreach($categorias as $cat)
+                        <option value="{{ $cat }}" {{ $categoria == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+    </form>
 
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+    <hr>
 
-@if(session('error'))
-    <div style="color: red; font-weight: bold;">
-        {{ session('error') }}
-    </div>
-@endif
+    <!-- Formulario para crear la Orden -->
+    <form action="{{ route('orden.store') }}" method="POST">
+        @csrf 
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Platillo</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th style="width: 150px;">Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($platillos as $platillo)
+                <tr>
+                    <td>{{ $platillo->nombre }}</td>
+                    <td>{{ $platillo->categoria }}</td>
+                    <td>${{ number_format($platillo->precio, 2) }}</td>
+                    <td>
+                        <!-- Importante: el name usa el ID del platillo -->
+                        <input type="number" name="platillos[{{ $platillo->id }}]" 
+                               value="0" min="0" class="form-control">
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-<form method="GET" action="{{ route('platillos.index') }}">
+        <!-- Paginación -->
+        {{ $platillos->links() }}
 
-    <input type="text" name="buscar" placeholder="Buscar platillo..." value="{{ $buscar }}">
-
-    <select name="categoria">
-        <option value="">Todas las categorías</option>
-
-        @foreach($categorias as $cat)
-            <option value="{{ $cat }}" {{ $categoria == $cat ? 'selected' : '' }}>
-                {{ $cat }}
-            </option>
-        @endforeach
-    </select>
-
-    <button type="submit">Filtrar</button>
-
-</form>
-<br>
-
-<table class="table table-bordered table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach($platillos as $p)
-        <tr>
-            <td>{{ $p->id }}</td>
-            <td>{{ $p->nombre }}</td>
-            <td>${{ $p->precio }}</td>
-            <td>{{ $p->categoria }}</td>
-            <td>
-                <a href="/platillos/{{ $p->id }}/editar" class="btn btn-warning btn-sm">Editar</a>
-
-                <form action="/platillos/{{ $p->id }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar?')">
-                        Eliminar
-                    </button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<br>
-
-{{ $platillos->links() }}
-
-</body>
-</html>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success btn-lg">🛒 Confirmar Pedido</button>
+        </div>
+    </form>
+</div>
+@endsection
