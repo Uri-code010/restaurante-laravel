@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Platillo extends Model
 {
-    protected $fillable = ['nombre', 'precio', 'categoria'];
+    protected $fillable = ['nombre', 'precio', 'categoria', 'descripcion', 'imagen'];
 }

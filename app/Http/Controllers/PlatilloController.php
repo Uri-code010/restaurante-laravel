@@ -33,6 +33,34 @@ class PlatilloController extends Controller
     }
 
     /**
+     * Display the public menu for clients.
+     */
+    public function menuPublico(Request $request)
+    {
+        // 1. Recibimos lo que el cliente escriba en la barra de búsqueda
+        $buscar = $request->input('buscar');
+        $categoria = $request->input('categoria');
+
+        // 2. Buscamos en la base de datos
+        $platillos = Platillo::when($buscar, function ($query, $buscar) {
+            $query->where(function($q) use ($buscar) {
+                $q->where('nombre', 'like', "%$buscar%")
+                  ->orWhere('descripcion', 'like', "%$buscar%");
+            });
+        })
+        ->when($categoria, function ($query, $categoria) {
+            $query->where('categoria', $categoria);
+        })
+        ->paginate(9); // Mostramos 9 tarjetas por página para que se vea lleno
+
+        // 3. Obtenemos las categorías para el filtro
+        $categorias = Platillo::select('categoria')->distinct()->pluck('categoria');
+
+        // 4. Retornamos la NUEVA vista (que crearemos en el paso 2)
+        return view('platillos.menu', compact('platillos', 'buscar', 'categoria', 'categorias'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -51,6 +79,8 @@ class PlatilloController extends Controller
             'nombre' => 'required|string|max:100',
             'precio' => 'required|numeric|min:1',
             'categoria' => 'required|string|max:50',
+            'descripcion' => 'nullable|string',
+            'imagen' => 'nullable|string',
         ]);
 
         Platillo::create($request->all());
@@ -93,13 +123,13 @@ class PlatilloController extends Controller
             'categoria' => 'required|string|max:50',
         ]);
 
-        
+
         $platillo = Platillo::findOrFail($id);
 
-        
+
         $platillo->update($request->all());
 
-        
+
         return redirect()->route('platillos.index')
             ->with('success', 'Platillo actualizado correctamente.');
 
@@ -116,11 +146,11 @@ class PlatilloController extends Controller
     {
         try {
 
-        
+
         $platillo = Platillo::findOrFail($id);
         $platillo->delete();
 
-        
+
         return redirect()->route('platillos.index')
             ->with('success', 'Platillo eliminado correctamente.');
 

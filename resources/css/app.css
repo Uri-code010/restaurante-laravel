@@ -1,11 +1,58 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+:root {
+    --bg-color: #FEFAE0;      /* Vainilla (Fondo) */
+    --accent-color: #E76F51;  /* Terracota (Botones/Destacados) */
+    --dark-color: #264653;    /* Azul Petróleo (Navbar/Textos) */
+    --card-bg: #FFFFFF;       /* Blanco puro para que resalte */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--dark-color);
+}
+
+/* Personalización global de títulos */
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    color: var(--dark-color);
+
+}
+/* Efecto hover (animación) para las tarjetas */
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* --- Personalización de la Barra de Búsqueda --- */
+
+/* 1. Controlar el estado "Focus" (Cuando el usuario hace clic para escribir) */
+.custom-input:focus, .custom-select:focus {
+    box-shadow: none; /* Esto elimina el resplandor azul por defecto de Bootstrap */
+    background-color: #ffffff; /* Hace que el fondo cambie de gris clarito a blanco al escribir */
+    border-color: #5064fa !important; /* Cambia el color del borde. ¡Pon el color de tu proyecto aquí! */
+}
+
+/* 2. Modificar el borde base para que sea un poco más grueso y visible */
+.custom-input, .custom-select {
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease; /* Hace que el cambio de color al hacer clic sea suave */
+}
+
+/* 3. Darle vida al botón de buscar */
+.custom-btn {
+    transition: all 0.3s ease; /* Prepara el botón para la animación */
+}
+
+.custom-btn:hover {
+    transform: translateY(-2px); /* El botón "salta" un poquito hacia arriba al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Le agrega una sombra para dar efecto 3D */
+    background-color: #423121; /* Cambia de negro al color de acento de tu restaurante */
+    border-color: #ffffff;
 }
