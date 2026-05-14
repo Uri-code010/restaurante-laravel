@@ -74,6 +74,8 @@
         </div>
     </div>
 
+    Orden #{{ $numeroOrden }}
+
     <div style="text-align: center; margin-top: 20px;" class="no-print">
         <a href="/menu" style="color: #333; text-decoration: none; font-family: sans-serif;">Volver al Menú</a>
     </div>

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center mt-4">
-    <div class="col-md-10">
+<div class="row justify-content-center mt-5">
+    <div class="col-md-7">
 
         <div class="card shadow border-0 rounded-4" style="background-color: var(--card-bg);">
             <div class="card-body p-5">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="fw-bold m-0" style="color: var(--dark-color);">✏️ Editar Platillo</h2>
+                    <h4 class="fw-bold m-0" style="color: var(--dark-color);">Editar Platillo</h4>
                     <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Modo Administrador</span>
                 </div>
 
@@ -44,10 +44,10 @@
                         <div class="col-md-3">
                             <label class="form-label fw-bold" style="color: var(--dark-color);">Categoría</label>
                             <select name="categoria" class="form-select custom-select rounded-pill px-4" required>
-                                <option value="entradas" {{ old('categoria', $platillo->categoria) == 'entradas' ? 'selected' : '' }}>Entradas</option>
-                                <option value="platos_fuertes" {{ old('categoria', $platillo->categoria) == 'platos_fuertes' ? 'selected' : '' }}>Platos Fuertes</option>
-                                <option value="bebidas" {{ old('categoria', $platillo->categoria) == 'bebidas' ? 'selected' : '' }}>Bebidas</option>
-                                <option value="postres" {{ old('categoria', $platillo->categoria) == 'postres' ? 'selected' : '' }}>Postres</option>
+                                <option value="clasicos" {{ old('categoria', $platillo->categoria) == 'clasicos' ? 'selected' : '' }}>Clásicos</option>
+                                <option value="chill" {{ old('categoria', $platillo->categoria) == 'chill' ? 'selected' : '' }}>Vibras Chill</option>
+                                <option value="filtrados" {{ old('categoria', $platillo->categoria) == 'filtrados' ? 'selected' : '' }}>Slow & Flow</option>
+                                <option value="postres" {{ old('categoria', $platillo->categoria) == 'postres' ? 'selected' : '' }}>Final Feliz</option>
                             </select>
                         </div>
 
@@ -72,12 +72,12 @@
                         </div>
 
                         <!-- Botones de Acción -->
-                        <div class="col-12 d-flex justify-content-end gap-3 mt-5">
-                            <a href="/platillos" class="btn btn-lg rounded-pill px-4 fw-bold" style="border: 2px solid var(--dark-color); color: var(--dark-color);">
+                        <div class="col-12 d-flex justify-content-end gap-3 mt-4">
+                            <a href="/platillos" class="btn btn-lg rounded-pill px-3 fw-bold" style="border: 2px solid var(--dark-color); color: var(--dark-color);">
                                 Cancelar
                             </a>
-                            <button type="submit" class="btn btn-lg rounded-pill px-5 fw-bold text-white shadow-sm" style="background-color: var(--accent-color);">
-                                Actualizar Platillo
+                            <button type="submit" class="btn btn-lg rounded-pill px-3 fw-bold text-white shadow-sm" style="background-color: var(--accent-color);">
+                                Actualizar
                             </button>
                         </div>
 

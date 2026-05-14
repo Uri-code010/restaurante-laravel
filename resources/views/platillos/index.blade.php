@@ -9,7 +9,7 @@
         </div>
         <div>
             <a href="{{ route('platillos.create') }}" class="btn btn-lg text-white rounded-pill shadow-sm fw-bold px-4" style="background-color: var(--accent-color);">
-                + Añadir Nuevo
+                Añadir Nuevo
             </a>
         </div>
     </div>
@@ -17,12 +17,12 @@
     <!-- Mensajes de éxito -->
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show rounded-4 shadow-sm border-0 mb-4" role="alert" style="background-color: #d4edda; color: #155724;">
-            <strong>✨ ¡Listo!</strong> {{ session('success') }}
+            <strong>¡Listo!</strong> {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    <!-- Cuadrícula de Tarjetas ADMIN (Aquí SÍ hay botones de Editar y Eliminar) -->
+    <!-- Cuadrícula de Tarjetas ADMIN -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @forelse ($platillos as $platillo)
             <div class="col">
@@ -42,14 +42,14 @@
                     <!-- BOTONES EXCLUSIVOS DEL ADMINISTRADOR -->
                     <div class="card-footer bg-white border-0 d-flex justify-content-between pb-3">
                         <a href="/platillos/{{ $platillo->id }}/editar" class="btn btn-sm rounded-pill px-3" style="border: 1px solid var(--dark-color); color: var(--dark-color);">
-                            ✏️ Editar
+                            Editar
                         </a>
 
                         <form action="/platillos/{{ $platillo->id }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm rounded-pill px-3 text-white" style="background-color: var(--dark-color);" onclick="return confirm('¿Seguro que quieres eliminar este platillo?')">
-                                🗑️ Eliminar
+                                Eliminar
                             </button>
                         </form>
                     </div>

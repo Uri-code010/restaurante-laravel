@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Platillo;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Orden;
+use App\Models\DetalleOrden;
 
 class PedidoController extends Controller
 {
@@ -42,7 +46,7 @@ class PedidoController extends Controller
         return view('pedido.index', compact('pedido', 'total'));
     }
 
-    // 3. Generar el Ticket Final
+    // 3. Generar el Ticket Final y Guardar en BD
     public function ticket()
     {
         $pedido = session()->get('pedido', []);
@@ -51,15 +55,40 @@ class PedidoController extends Controller
             return redirect('/menu')->with('error', 'Tu pedido está vacío.');
         }
 
-        $total = 0;
-        foreach($pedido as $item) {
-            $total += $item['precio'] * $item['cantidad'];
+        // 1. Crear la Orden usando el modelo de tu compañero
+        $orden = Orden::create([
+            'user_id' => Auth::id(),
+            'estado' => 'pendiente',
+            'total' => 0, // Lo calcularemos en el loop
+        ]);
+
+        $totalCalculado = 0;
+
+        // 2. Crear los detalles de la orden
+        foreach($pedido as $platillo_id => $item) {
+            $subtotal = $item['precio'] * $item['cantidad'];
+
+            DetalleOrden::create([
+                'orden_id' => $orden->id,
+                'platillo_id' => $platillo_id,
+                'cantidad' => $item['cantidad'],
+                'precio_unitario' => $item['precio'],
+                'subtotal' => $subtotal,
+            ]);
+
+            $totalCalculado += $subtotal;
         }
 
-        // Guardamos los datos para el ticket y vaciamos el pedido actual para el siguiente cliente
+        // 3. Actualizar el total final de la orden
+        $orden->total = $totalCalculado;
+        $orden->save();
+
+        // Guardamos datos para la vista del ticket y limpiamos sesión
         $ticket = $pedido;
+        $total = $totalCalculado;
+        $numeroOrden = $orden->id;
         session()->forget('pedido');
 
-        return view('pedido.ticket', compact('ticket', 'total'));
+        return view('pedido.ticket', compact('ticket', 'total', 'numeroOrden'));
     }
 }

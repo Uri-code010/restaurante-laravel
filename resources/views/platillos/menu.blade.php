@@ -61,7 +61,7 @@
         @forelse ($platillos as $platillo)
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
-                    <img src="{{ $platillo->imagen ?? 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500' }}" class="card-img-top" alt="{{ $platillo->nombre }}" style="height: 200px; object-fit: cover;">
+                    <img src="{{ $platillo->imagen ?? 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500' }}" class="card-img-top" alt="{{ $platillo->nombre }}" style="height: 220px; object-fit: cover;">
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">

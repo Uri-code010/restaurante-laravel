@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center mt-4">
-    <div class="col-md-10">
+<div class="row justify-content-center mt-5">
+    <div class="col-md-7">
 
         <div class="card shadow border-0 rounded-4" style="background-color: var(--card-bg);">
-            <div class="card-body p-2">
-                <h3 class="fw-bold mb-4" style="color: var(--dark-color);">Agrega al menú</h3>
+            <div class="card-body p-6">
+                <h4 class="fw-bold mb-4" style="color: var(--dark-color);">Agrega al menú</h4>
 
                 @if ($errors->any())
                     <div class="alert alert-danger rounded-4">
@@ -33,7 +33,7 @@
 
                         <div class="col-md-3">
                             <label class="form-label fw-bold" style="color: var(--dark-color);">Categoría</label>
-                            <select name="categoria" class="form-select custom-select rounded-pill px-4" required>
+                            <select name="categoria" class="form-select custom-select rounded-pill px-2" required>
                                 <option value="">Selecciona...</option>
                                 <option value="clasicos" {{ old('categoria') == 'clasicos' ? 'selected' : '' }}>Clásicos</option>
                                 <option value="chill" {{ old('categoria') == 'chill' ? 'selected' : '' }}>Vibras Chill</option>
@@ -53,12 +53,12 @@
                             <textarea name="descripcion" class="form-control custom-input rounded-4 p-3" rows="3" placeholder="Describe los ingredientes o el sabor de este platillo...">{{ old('descripcion') }}</textarea>
                         </div>
 
-                        <div class="col-12 d-flex justify-content-end gap-3 mt-5">
-                            <a href="/platillos" class="btn btn-lg rounded-pill px-4 fw-bold" style="border: 2px solid var(--dark-color); color: var(--dark-color);">
+                        <div class="col-12 d-flex justify-content-end gap-3 mt-4">
+                            <a href="/platillos" class="btn btn-lg rounded-pill px-3 fw-bold" style="border: 2px solid var(--dark-color); color: var(--dark-color);">
                                 Cancelar
                             </a>
-                            <button type="submit" class="btn btn-lg rounded-pill px-5 fw-bold text-white shadow-sm" style="background-color: var(--accent-color);">
-                                Guardar Platillo
+                            <button type="submit" class="btn btn-lg rounded-pill px-3 fw-bold text-white shadow-sm" style="background-color: var(--accent-color);">
+                                Guardar
                             </button>
                         </div>
 
